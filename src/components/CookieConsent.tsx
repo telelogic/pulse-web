@@ -83,7 +83,7 @@ const CookieConsent = () => {
             </div>
 
             <p className="text-gray-700">
-              We respect your privacy and believe in cookieless analytics. This website uses minimal, essential cookies only for:
+              We respect your privacy and believe in cookieless analytics. This website uses minimal cookies for:
             </p>
 
             <ul className="mt-2 space-y-1 text-sm text-gray-600 ml-4">
@@ -99,7 +99,19 @@ const CookieConsent = () => {
                 <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                 <span>Basic security features</span>
               </li>
+              <li className="flex items-center space-x-2">
+                <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
+                <span>Google Ads optimization (to improve our marketing)</span>
+              </li>
             </ul>
+
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-blue-800 text-sm">
+                <strong>Transparency Note:</strong> We use Google Ads tracking to optimize our marketing campaigns 
+                while using PULSE for all our actual business analytics. This demonstrates the superior 
+                attribution data PULSE provides compared to traditional cookie-based tracking.
+              </p>
+            </div>
           </div>
 
           {/* Detailed Information (Collapsible) */}
@@ -120,6 +132,19 @@ const CookieConsent = () => {
                       <span className="text-gray-500">Remembers consent choice</span>
                     </div>
                   </div>
+                </div>
+
+                <div>
+                  <h5 className="font-medium text-gray-800">Marketing Cookies (Can be disabled)</h5>
+                  <div className="mt-2 space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Google Ads (_gid, _gac_*)</span>
+                      <span className="text-gray-500">Conversion tracking and ad optimization</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    These help us optimize our marketing campaigns. We use PULSE for all other analytics.
+                  </p>
                 </div>
 
                 <div>

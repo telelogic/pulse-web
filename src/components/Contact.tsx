@@ -9,6 +9,12 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useForm, ValidationError } from '@formspree/react';
 import { useEffect, useState } from 'react';
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 const Contact = () => {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
@@ -32,6 +38,20 @@ const Contact = () => {
 
   // Show success message when form is submitted successfully
   if (state.succeeded) {
+    // Track Google Ads conversion
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-16799880044/demo_request', // Replace with your actual conversion ID
+        'value': actionType === 'Start 14 Day Trial' ? 100 : 50,
+        'currency': 'USD',
+        'transaction_id': Date.now().toString(),
+        'custom_parameters': {
+          'action_type': actionType,
+          'timestamp': new Date().toISOString()
+        }
+      });
+    }
+
     return (
       <section className="py-20 px-4">
         <div className="container mx-auto">

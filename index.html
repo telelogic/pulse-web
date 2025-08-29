@@ -18,6 +18,26 @@
     <meta property="og:url" content="https://pulseanalytics.com/" />
     <meta property="og:title" content="Pulse Analytics - Cookieless Marketing Platform Ready for Chrome 2025" />
     <meta property="og:description" content="While competitors scramble for Chrome's cookie deadline, Pulse delivers 98.7% attribution accuracy without cookies. Join 2,500+ future-proofed businesses." />
+    
+    <!-- Google Ads Conversion Tracking -->
+    <!-- Note: We use Google Ads tracking to optimize our marketing campaigns while -->
+    <!-- demonstrating that PULSE provides superior attribution data for our own analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16799880044"></script>
+    <script>
+      // Only load Google Ads tracking in production to reduce dev console noise
+      if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-16799880044');
+      } else {
+        // In development, create a mock gtag function to prevent errors
+        window.dataLayer = [];
+        window.gtag = function() {
+          console.log('📊 Google Ads tracking (disabled in development):', arguments);
+        };
+      }
+    </script>
     <meta property="og:image" content="https://pulseanalytics.com/og-image-pulse-analytics.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -35,6 +55,7 @@
     <!-- Additional Meta Tags for SEO -->
     <meta name="theme-color" content="#7c3aed" />
     <meta name="msapplication-TileColor" content="#7c3aed" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Pulse Analytics" />
