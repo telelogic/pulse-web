@@ -73,7 +73,10 @@ const HowItWorks = () => {
               <p className="opacity-90">Join hundreds of forward-thinking companies already using privacy as a competitive advantage.</p>
             </div>
             <div className="flex justify-center md:justify-end">
-              <button className="bg-white text-primary-purple hover:bg-gray-100 transition-colors py-3 px-6 rounded-lg font-medium">
+              <button 
+                className="bg-white text-primary-purple hover:bg-gray-100 transition-colors py-3 px-6 rounded-lg font-medium"
+                onClick={() => window.location.href = '/#contact'}
+              >
                 Schedule a Demo
               </button>
             </div>

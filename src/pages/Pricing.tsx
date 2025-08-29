@@ -51,11 +51,11 @@ const Pricing = () => {
   };
 
   const handleStartTrial = () => {
-    navigate("/#contact");
+    navigate("/#contact?action=trial");
   };
 
   const handleContactSales = () => {
-    navigate("/#contact");
+    navigate("/#contact?action=demo");
   };
 
   const handleCalculateSavings = () => {

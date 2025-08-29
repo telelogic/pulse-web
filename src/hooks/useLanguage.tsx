@@ -11,6 +11,7 @@ interface Translations {
 
 const translations: Translations = {
   // Navbar
+  "nav.home": { en: "Home", gr: "Αρχική" },
   "nav.features": { en: "Features", gr: "Χαρακτηριστικά" },
   "nav.howItWorks": { en: "How It Works", gr: "Πώς Λειτουργεί" },
   "nav.testimonials": { en: "Testimonials", gr: "Μαρτυρίες" },

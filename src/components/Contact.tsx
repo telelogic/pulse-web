@@ -5,15 +5,30 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle, Send } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useForm, ValidationError } from '@formspree/react';
+import { useEffect, useState } from 'react';
 
 const Contact = () => {
   const { t } = useLanguage();
+  const [searchParams] = useSearchParams();
+  const [actionType, setActionType] = useState('');
   
   // Replace 'your-form-id' with your actual Formspree form ID
   // You'll get this after creating a form at https://formspree.io
   const [state, handleSubmit] = useForm("mgvlonvn");
+
+  // Check URL parameters for action type
+  useEffect(() => {
+    const action = searchParams.get('action');
+    if (action === 'demo') {
+      setActionType('Schedule a Demo');
+    } else if (action === 'trial') {
+      setActionType('Start 14 Day Trial');
+    } else {
+      setActionType('General Inquiry');
+    }
+  }, [searchParams]);
 
   // Show success message when form is submitted successfully
   if (state.succeeded) {
@@ -25,7 +40,12 @@ const Contact = () => {
               <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-6" />
               <h2 className="text-3xl font-bold text-green-800 mb-4">Thank You!</h2>
               <p className="text-green-700 text-lg mb-6">
-                Your demo request has been received. We'll contact you within 24 hours to schedule your personalized PULSE Analytics demonstration.
+                {actionType === 'Start 14 Day Trial' 
+                  ? "Your trial request has been received. We'll set up your 14-day trial account and send login details within 2 hours."
+                  : actionType === 'Schedule a Demo'
+                  ? "Your demo request has been received. We'll contact you within 24 hours to schedule your personalized PULSE Analytics demonstration."
+                  : "Your inquiry has been received. We'll get back to you within 24 hours with the information you requested."
+                }
               </p>
               <div className="bg-white border border-green-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-green-600">
@@ -57,7 +77,7 @@ const Contact = () => {
             <div className="bg-gradient-to-br from-primary-purple to-primary-blue p-8 md:p-12 text-white">
               <div className="flex items-center mb-6">
                 <img 
-                  src="/logo.png" 
+                  src="/privapulselogo.png" 
                   alt="PULSE Analytics Logo" 
                   className="w-32 h-auto"
                 />
@@ -109,13 +129,30 @@ const Contact = () => {
             </div>
             
             <div className="p-8 md:p-12">
-              <h3 className="text-2xl font-heading font-bold mb-6">{t("contact.getStartedTitle")}</h3>
+              <h3 className="text-2xl font-heading font-bold mb-6">
+                {actionType === 'Start 14 Day Trial' 
+                  ? "Start Your Free 14-Day Trial"
+                  : actionType === 'Schedule a Demo'
+                  ? "Schedule Your Demo"
+                  : t("contact.getStartedTitle")
+                }
+              </h3>
+              {actionType !== 'General Inquiry' && (
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
+                  <p className="text-purple-800 text-sm">
+                    <strong>{actionType}</strong> - Fill out the form below and we'll get you started immediately!
+                  </p>
+                </div>
+              )}
               <form 
                 onSubmit={handleSubmit} 
                 method="POST"
                 action="https://formspree.io/f/mgvlonvn"
                 className="space-y-5"
               >
+                {/* Hidden field to track action type */}
+                <input type="hidden" name="action_type" value={actionType} />
+                <input type="hidden" name="_subject" value={`New ${actionType} Request from PULSE Analytics`} />
                 <div>
                   <Label htmlFor="name" className="text-gray-700">{t("contact.fullName")} <span className="text-red-500">*</span></Label>
                   <Input 
@@ -167,7 +204,13 @@ const Contact = () => {
                     id="message"
                     name="message"
                     className="mt-1"
-                    placeholder="Tell us about your analytics needs, team size, or any specific questions..."
+                    placeholder={
+                      actionType === 'Start 14 Day Trial' 
+                        ? "Tell us about your current analytics setup and what you'd like to test during your trial..."
+                        : actionType === 'Schedule a Demo'
+                        ? "Tell us about your analytics needs, team size, or any specific questions for the demo..."
+                        : "Tell us about your analytics needs, team size, or any specific questions..."
+                    }
                     rows={4}
                   />
                   <ValidationError 
@@ -191,7 +234,14 @@ const Contact = () => {
                     ) : (
                       <div className="flex items-center space-x-2">
                         <Send className="w-4 h-4" />
-                        <span>{t("contact.requestDemo")}</span>
+                        <span>
+                          {actionType === 'Start 14 Day Trial' 
+                            ? "Start My Free Trial"
+                            : actionType === 'Schedule a Demo'
+                            ? "Schedule Demo"
+                            : t("contact.requestDemo")
+                          }
+                        </span>
                       </div>
                     )}
                   </Button>

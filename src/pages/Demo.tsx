@@ -176,7 +176,11 @@ const Demo = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-primary-purple hover:bg-secondary-purple text-white">
+            <Button 
+              size="lg" 
+              className="bg-primary-purple hover:bg-secondary-purple text-white"
+              onClick={() => window.location.href = '/#contact?action=trial'}
+            >
               Start Free Trial
             </Button>
             <Button size="lg" variant="outline" onClick={() => setShowImplementation(!showImplementation)}>
@@ -467,10 +471,19 @@ const Demo = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-primary-purple hover:bg-gray-100">
+            <Button 
+              size="lg" 
+              className="bg-white text-primary-purple hover:bg-gray-100"
+              onClick={() => window.location.href = '/#contact?action=trial'}
+            >
               Start 14-Day Free Trial
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary-purple">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white hover:text-primary-purple"
+              onClick={() => window.location.href = '/#contact?action=demo'}
+            >
               Schedule Demo Call
             </Button>
           </div>

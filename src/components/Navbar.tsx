@@ -64,14 +64,20 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <img 
-              src="/logo.png" 
+              src="/privapulselogo.png" 
               alt="PULSE Analytics Logo" 
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <button 
+              onClick={() => navigate('/')}
+              className="text-gray-700 hover:text-primary-purple font-medium transition-colors"
+            >
+              {t("nav.home")}
+            </button>
             <button 
               onClick={() => handleNavigation('features')}
               className="text-gray-700 hover:text-primary-purple font-medium transition-colors"
@@ -125,6 +131,15 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-lg">
             <div className="flex flex-col space-y-3 px-4">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  navigate('/');
+                }}
+                className="text-gray-700 hover:text-primary-purple font-medium transition-colors py-2 text-left"
+              >
+                {t("nav.home")}
+              </button>
               <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);

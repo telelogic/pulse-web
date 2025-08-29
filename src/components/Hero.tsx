@@ -24,7 +24,11 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.8s" }}>
-              <Button size="lg" className="bg-primary-purple hover:bg-secondary-purple text-white font-medium px-6">
+              <Button 
+                size="lg" 
+                className="bg-primary-purple hover:bg-secondary-purple text-white font-medium px-6"
+                onClick={() => window.location.href = '/#contact'}
+              >
                 {t("hero.getStartedFree")}
               </Button>
               <Button 
