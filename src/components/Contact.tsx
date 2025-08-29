@@ -30,7 +30,7 @@ const Contact = () => {
     if (action === 'demo') {
       setActionType('Schedule a Demo');
     } else if (action === 'trial') {
-      setActionType('Start 14 Day Trial');
+      setActionType('Start 7 Day Trial');
     } else {
       setActionType('General Inquiry');
     }
@@ -42,7 +42,7 @@ const Contact = () => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'conversion', {
         'send_to': 'AW-16799880044/demo_request', // Replace with your actual conversion ID
-        'value': actionType === 'Start 14 Day Trial' ? 100 : 50,
+        'value': actionType === 'Start 7 Day Trial' ? 100 : 50,
         'currency': 'USD',
         'transaction_id': Date.now().toString(),
         'custom_parameters': {
@@ -60,8 +60,8 @@ const Contact = () => {
               <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-6" />
               <h2 className="text-3xl font-bold text-green-800 mb-4">Thank You!</h2>
               <p className="text-green-700 text-lg mb-6">
-                {actionType === 'Start 14 Day Trial' 
-                  ? "Your trial request has been received. We'll set up your 14-day trial account and send login details within 2 hours."
+                {actionType === 'Start 7 Day Trial' 
+                  ? "Your trial request has been received. We'll set up your 7-day trial account and send login details within 2 hours."
                   : actionType === 'Schedule a Demo'
                   ? "Your demo request has been received. We'll contact you within 24 hours to schedule your personalized PULSE Analytics demonstration."
                   : "Your inquiry has been received. We'll get back to you within 24 hours with the information you requested."
@@ -150,8 +150,8 @@ const Contact = () => {
             
             <div className="p-8 md:p-12">
               <h3 className="text-2xl font-heading font-bold mb-6">
-                {actionType === 'Start 14 Day Trial' 
-                  ? "Start Your Free 14-Day Trial"
+                {actionType === 'Start 7 Day Trial' 
+                  ? "Start Your Free 7-Day Trial"
                   : actionType === 'Schedule a Demo'
                   ? "Schedule Your Demo"
                   : t("contact.getStartedTitle")
@@ -225,7 +225,7 @@ const Contact = () => {
                     name="message"
                     className="mt-1"
                     placeholder={
-                      actionType === 'Start 14 Day Trial' 
+                      actionType === 'Start 7 Day Trial' 
                         ? "Tell us about your current analytics setup and what you'd like to test during your trial..."
                         : actionType === 'Schedule a Demo'
                         ? "Tell us about your analytics needs, team size, or any specific questions for the demo..."
@@ -255,7 +255,7 @@ const Contact = () => {
                       <div className="flex items-center space-x-2">
                         <Send className="w-4 h-4" />
                         <span>
-                          {actionType === 'Start 14 Day Trial' 
+                          {actionType === 'Start 7 Day Trial' 
                             ? "Start My Free Trial"
                             : actionType === 'Schedule a Demo'
                             ? "Schedule Demo"
