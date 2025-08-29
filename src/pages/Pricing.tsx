@@ -2,12 +2,53 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Link, useNavigate } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Pricing = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+
+  const seoConfig = {
+    title: "PULSE Analytics Pricing - Cookieless Analytics from $49/month",
+    description: "Affordable cookieless analytics pricing. Start at $49/month vs Google Analytics $150k+/year. Get 98.7% attribution accuracy without cookies. Free trial available.",
+    keywords: "cookieless analytics pricing, GA4 alternative cost, attribution recovery pricing, privacy-first analytics plans, 2025 cookie solution pricing",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "PULSE Analytics",
+      "description": "Cookieless analytics platform with 98.7% attribution accuracy",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Starter Plan",
+          "priceCurrency": "USD",
+          "price": "49",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "49",
+            "priceCurrency": "USD",
+            "billingDuration": "P1M"
+          },
+          "availability": "https://schema.org/InStock"
+        },
+        {
+          "@type": "Offer",
+          "name": "Professional Plan",
+          "priceCurrency": "USD",
+          "price": "149",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "149",
+            "priceCurrency": "USD",
+            "billingDuration": "P1M"
+          },
+          "availability": "https://schema.org/InStock"
+        }
+      ]
+    }
+  };
 
   const handleStartTrial = () => {
     navigate("/#contact");
@@ -24,6 +65,7 @@ const Pricing = () => {
   
   return (
     <div className="min-h-screen overflow-x-hidden">
+      <SEOHead {...seoConfig} />
       <Navbar />
       <main>
         {/* Hero Section */}

@@ -63,8 +63,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <ShieldCheck className="h-6 w-6 text-primary-purple mr-2" />
-            <span className="text-xl font-heading font-bold text-gray-900">Pulse</span>
+            <img 
+              src="/logo.png" 
+              alt="PULSE Analytics Logo" 
+              className="h-8 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}

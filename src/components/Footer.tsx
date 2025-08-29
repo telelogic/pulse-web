@@ -1,6 +1,7 @@
 
 import { ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -65,7 +66,7 @@ const Footer = () => {
             <h4 className="text-lg font-medium mb-4">{t("footer.legal")}</h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footer.terms")}</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footer.privacy")}</a></li>
+              <li><Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">{t("footer.privacy")}</Link></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footer.cookies")}</a></li>
               <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footer.gdpr")}</a></li>
             </ul>

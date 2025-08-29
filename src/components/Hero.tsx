@@ -27,7 +27,12 @@ const Hero = () => {
               <Button size="lg" className="bg-primary-purple hover:bg-secondary-purple text-white font-medium px-6">
                 {t("hero.getStartedFree")}
               </Button>
-              <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 font-medium px-6">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-gray-300 text-gray-700 font-medium px-6"
+                onClick={() => window.location.href = '/demo'}
+              >
                 {t("hero.bookDemo")}
               </Button>
             </div>

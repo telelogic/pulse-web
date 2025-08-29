@@ -1,3 +1,22 @@
+# Pulse Analytics - Cookieless Marketing Platform
+# Optimized for search engines and competitive research
+
+User-agent: *
+Allow: /
+
+# Priority pages for indexing
+Allow: /demo
+Allow: /pricing  
+Allow: /features
+Allow: /blog
+
+# Block admin and sensitive areas (when we add them)
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /_internal/
+
+# Specific search engine bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +29,20 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Block competitors from easily scraping
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot  
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://privapulse.com/sitemap.xml
+
+# Additional resources
+# Website: https://privapulse.com
+# Contact: contact@privapulse.com
+# Focus: Cookieless analytics for Chrome 2025 cookie deprecation

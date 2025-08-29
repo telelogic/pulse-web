@@ -1,43 +1,53 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { CheckCircle, Send } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { Link } from "react-router-dom";
+import { useForm, ValidationError } from '@formspree/react';
 
 const Contact = () => {
   const { t } = useLanguage();
-  const { toast } = useToast();
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
+  
+  // Replace 'your-form-id' with your actual Formspree form ID
+  // You'll get this after creating a form at https://formspree.io
+  const [state, handleSubmit] = useForm("mgvlonvn");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Simple form validation
-    if (!email || !name) {
-      toast({
-        title: t("contact.missingInfo"),
-        description: t("contact.fillRequired"),
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    // Show success message
-    toast({
-      title: t("contact.requestReceived"),
-      description: t("contact.inTouch"),
-    });
-    
-    // Reset form
-    setEmail("");
-    setName("");
-    setCompany("");
-  };
+  // Show success message when form is submitted successfully
+  if (state.succeeded) {
+    return (
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-12">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-green-800 mb-4">Thank You!</h2>
+              <p className="text-green-700 text-lg mb-6">
+                Your demo request has been received. We'll contact you within 24 hours to schedule your personalized PULSE Analytics demonstration.
+              </p>
+              <div className="bg-white border border-green-200 rounded-lg p-4 mb-6">
+                <p className="text-sm text-green-600">
+                  <strong>What's Next:</strong><br />
+                  1. We'll email you within 1 hour to confirm receipt<br />
+                  2. Our team will prepare a customized demo<br />
+                  3. We'll schedule a convenient time for your demo<br />
+                  4. Get ready to see 98.7% attribution accuracy!
+                </p>
+              </div>
+              <Button 
+                onClick={() => window.location.reload()} 
+                className="bg-primary-purple hover:bg-secondary-purple text-white"
+              >
+                Send Another Request
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 px-4">
@@ -46,8 +56,11 @@ const Contact = () => {
           <div className="grid md:grid-cols-2">
             <div className="bg-gradient-to-br from-primary-purple to-primary-blue p-8 md:p-12 text-white">
               <div className="flex items-center mb-6">
-                <ShieldCheck className="w-8 h-8 mr-2" />
-                <h3 className="text-2xl font-heading font-bold">Pulse</h3>
+                <img 
+                  src="/logo.png" 
+                  alt="PULSE Analytics Logo" 
+                  className="w-32 h-auto"
+                />
               </div>
               
               <h2 className="text-3xl font-heading font-bold mb-4">{t("contact.title")}</h2>
@@ -64,7 +77,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-white/70">{t("contact.email")}</p>
-                    <p className="font-medium">contact@pulseprivacy.com</p>
+                    <p className="font-medium">contact@privapulse.com</p>
                   </div>
                 </div>
                 
@@ -76,7 +89,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-white/70">{t("contact.phone")}</p>
-                    <p className="font-medium">+1 (555) 123-4567</p>
+                    <p className="font-medium">+30 698 6680 132</p>
                   </div>
                 </div>
                 
@@ -89,7 +102,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-white/70">{t("contact.location")}</p>
-                    <p className="font-medium">San Francisco, CA</p>
+                    <p className="font-medium">Athens, GR</p>
                   </div>
                 </div>
               </div>
@@ -97,15 +110,24 @@ const Contact = () => {
             
             <div className="p-8 md:p-12">
               <h3 className="text-2xl font-heading font-bold mb-6">{t("contact.getStartedTitle")}</h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form 
+                onSubmit={handleSubmit} 
+                method="POST"
+                action="https://formspree.io/f/mgvlonvn"
+                className="space-y-5"
+              >
                 <div>
                   <Label htmlFor="name" className="text-gray-700">{t("contact.fullName")} <span className="text-red-500">*</span></Label>
                   <Input 
                     id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    name="name"
                     className="mt-1"
                     required
+                  />
+                  <ValidationError 
+                    prefix="Name" 
+                    field="name"
+                    errors={state.errors}
                   />
                 </div>
                 
@@ -113,11 +135,15 @@ const Contact = () => {
                   <Label htmlFor="email" className="text-gray-700">{t("contact.emailAddress")} <span className="text-red-500">*</span></Label>
                   <Input 
                     id="email"
+                    name="email"
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
                     className="mt-1"
                     required
+                  />
+                  <ValidationError 
+                    prefix="Email" 
+                    field="email"
+                    errors={state.errors}
                   />
                 </div>
                 
@@ -125,21 +151,55 @@ const Contact = () => {
                   <Label htmlFor="company" className="text-gray-700">{t("contact.companyName")}</Label>
                   <Input 
                     id="company"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
+                    name="company"
                     className="mt-1"
+                  />
+                  <ValidationError 
+                    prefix="Company" 
+                    field="company"
+                    errors={state.errors}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="message" className="text-gray-700">Message (Optional)</Label>
+                  <Textarea 
+                    id="message"
+                    name="message"
+                    className="mt-1"
+                    placeholder="Tell us about your analytics needs, team size, or any specific questions..."
+                    rows={4}
+                  />
+                  <ValidationError 
+                    prefix="Message" 
+                    field="message"
+                    errors={state.errors}
                   />
                 </div>
                 
                 <div className="pt-2">
-                  <Button type="submit" className="w-full bg-primary-purple hover:bg-secondary-purple text-white">
-                    {t("contact.requestDemo")}
+                  <Button 
+                    type="submit" 
+                    disabled={state.submitting}
+                    className="w-full bg-primary-purple hover:bg-secondary-purple text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {state.submitting ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Sending Request...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <Send className="w-4 h-4" />
+                        <span>{t("contact.requestDemo")}</span>
+                      </div>
+                    )}
                   </Button>
                 </div>
                 
                 <p className="text-xs text-gray-500 mt-4">
                   {t("contact.privacyNote")}{' '}
-                  <a href="#" className="text-primary-purple underline hover:text-primary-blue">{t("contact.privacyPolicy")}</a>{' '}
+                  <Link to="/privacy" className="text-primary-purple underline hover:text-primary-blue">{t("contact.privacyPolicy")}</Link>{' '}
                   {t("contact.consentNote")}
                 </p>
               </form>
