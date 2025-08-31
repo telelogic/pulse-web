@@ -24,7 +24,7 @@ const translations: Translations = {
   "hero.title2": { en: "Cookieless", gr: "Μέλλον Χωρίς" },
   "hero.title3": { en: "Future", gr: "Cookies του Chrome" },
   "hero.description": { en: "While competitors scramble to adapt, Pulse delivers complete marketing analytics, attribution, and personalization without third-party cookies. Join 2,500+ businesses already future-proofed.", gr: "Ενώ οι ανταγωνιστές παλεύουν να προσαρμοστούν, η Pulse παρέχει πλήρη ανάλυση μάρκετινγκ, απόδοση και εξατομίκευση χωρίς cookies τρίτων. Ενταχθείτε σε 2.500+ επιχειρήσεις που είναι ήδη προετοιμασμένες για το μέλλον." },
-  "hero.getStartedFree": { en: "Start 14-Day Free Trial", gr: "Ξεκινήστε 14ήμερη Δωρεάν Δοκιμή" },
+  "hero.getStartedFree": { en: "Start 7-Day Free Trial", gr: "Ξεκινήστε 7ήμερη Δωρεάν Δοκιμή" },
   "hero.bookDemo": { en: "See Cookieless Demo", gr: "Δείτε Demo Χωρίς Cookies" },
   "hero.urgencyText": { en: "Free migration from Google Analytics • Setup in under 15 minutes", gr: "Δωρεάν μετεγκατάσταση από Google Analytics • Εγκατάσταση σε λιγότερο από 15 λεπτά" },
   "hero.privacyCompliant": { en: "100% Privacy Compliant", gr: "100% Συμβατό με Ιδιωτικότητα" },

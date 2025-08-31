@@ -10,7 +10,7 @@ interface SEOHeadProps {
 
 const SEOHead: React.FC<SEOHeadProps> = ({
   title = "Pulse Analytics - Cookieless Marketing Platform | Future-Proof Your Business for Chrome 2025",
-  description = "The only marketing analytics platform built for Chrome's cookieless future. Get 98.7% attribution accuracy without cookies. GDPR compliant. 14-day free trial. Setup in 15 minutes.",
+  description = "The only marketing analytics platform built for Chrome's cookieless future. Get 98.7% attribution accuracy without cookies. GDPR compliant. 7-day free trial. Setup in 15 minutes.",
   keywords = "cookieless analytics, chrome cookies 2025, marketing attribution, privacy analytics, GDPR compliant tracking, google analytics alternative, cookieless tracking, privacy-first marketing, attribution platform, marketing analytics",
   canonical = "https://privapulse.com/",
   ogImage = "https://privapulse.com/og-image-pulse-analytics.png"
