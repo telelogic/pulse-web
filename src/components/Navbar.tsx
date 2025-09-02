@@ -83,14 +83,16 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <OptimizedImage 
-              src="/privapulselogo.png" 
-              alt="PULSE Analytics Logo" 
-              className="h-12 w-auto"
-              width={128}
-              height={56}
-              priority={true}
-            />
+            <picture>
+              <source srcSet="/privapulselogo.webp" type="image/webp" />
+              <img 
+                src="/privapulselogo.png" 
+                alt="PULSE Analytics Logo" 
+                className="h-12 w-auto"
+                width={128}
+                height={56}
+              />
+            </picture>
           </div>
 
           {/* Desktop Navigation */}

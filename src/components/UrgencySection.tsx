@@ -2,13 +2,31 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { useCountdown } from "@/hooks/useCountdown";
 import { Clock, TrendingDown, TrendingUp } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UrgencySection = () => {
   const { t } = useLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
   
   // Target date: Q3 2025 (assuming July 1, 2025)
   const targetDate = new Date('2025-07-01T00:00:00Z');
   const timeLeft = useCountdown(targetDate);
+
+  const isHomePage = location.pathname === '/';
+
+  const handleStartTrial = () => {
+    if (isHomePage) {
+      // If on home page, scroll to contact
+      const element = document.getElementById('contact');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // If on other page, navigate to home contact section
+      navigate('/#contact');
+    }
+  };
 
   const CountdownBox = ({ value, label }: { value: number; label: string }) => (
     <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 min-w-[70px] shadow-lg border border-white/30">
@@ -83,6 +101,7 @@ const UrgencySection = () => {
         {/* CTA Button */}
         <div className="space-y-4">
           <Button 
+            onClick={handleStartTrial}
             className="bg-white text-primary-purple hover:bg-gray-100 font-bold py-4 px-8 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-2 border-white/20"
             size="lg"
           >

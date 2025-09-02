@@ -481,7 +481,7 @@ const Demo = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-primary-purple"
+              className="border-white text-black hover:bg-white hover:text-primary-purple"
               onClick={() => window.location.href = '/#contact?action=demo'}
             >
               Schedule Demo Call
