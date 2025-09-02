@@ -1,9 +1,30 @@
 
+/* Import mobile performance optimizations */
+@import './styles/mobile-performance.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Critical CSS for above-the-fold content */
 @layer base {
+  /* Font loading optimization */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Inter'), url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+  }
+  
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local('Poppins'), url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -34,6 +55,32 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+  }
+
+  /* Performance optimizations */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Prevent layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Smooth scrolling without performance impact */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile-first optimizations */
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   .dark {

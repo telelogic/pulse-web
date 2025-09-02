@@ -1,10 +1,12 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useLocation, useNavigate } from "react-router-dom";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import OptimizedImage from "@/components/OptimizedImage";
+import { useDebounceResize } from "@/hooks/usePerformantLayout";
 
 const Navbar = () => {
   const { t } = useLanguage();
@@ -12,47 +14,65 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
   const isHomePage = location.pathname === '/';
 
-  const handleNavigation = (sectionId: string) => {
+  const handleNavigation = useCallback((sectionId: string) => {
     if (isHomePage) {
       // If on home page, scroll to section
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     } else {
       // If on other page, navigate to home with hash
       navigate(`/#${sectionId}`);
     }
-  };
+  }, [isHomePage, navigate]);
 
-  const handleGetStarted = () => {
+  const handleGetStarted = useCallback(() => {
     if (isHomePage) {
       // If on home page, scroll to contact
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      const element = document.getElementById('contact');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     } else {
       // If on other page, navigate to home contact section
       navigate('/#contact');
     }
-  };
+  }, [isHomePage, navigate]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+  // Optimized scroll handler with throttling to prevent forced reflows
+  const handleScroll = useCallback(() => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    
+    scrollTimeoutRef.current = setTimeout(() => {
+      // Use requestAnimationFrame to batch DOM reads
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        setIsScrolled(scrollY > 10);
+      });
+    }, 10);
   }, []);
 
-  const toggleMobileMenu = () => {
+  useEffect(() => {
+    // Use passive listener for better performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [handleScroll]);
+
+  const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  }, [isMobileMenuOpen]);
 
   return (
     <nav
@@ -63,10 +83,13 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <img 
+            <OptimizedImage 
               src="/privapulselogo.png" 
               alt="PULSE Analytics Logo" 
               className="h-12 w-auto"
+              width={128}
+              height={56}
+              priority={true}
             />
           </div>
 

@@ -1,0 +1,124 @@
+/* Mobile Performance Utilities */
+
+/* Critical CSS for mobile optimization */
+.mobile-optimized {
+  /* Prevent layout shifts */
+  contain: layout style paint;
+  
+  /* GPU acceleration for smooth animations */
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+.mobile-hero {
+  /* Mobile-first hero section */
+  min-height: 70vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Optimize for mobile viewport */
+  @media (max-width: 768px) {
+    min-height: 60vh;
+    padding: 1rem;
+  }
+}
+
+.lazy-load-placeholder {
+  /* Placeholder for lazy-loaded content */
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Optimized image containers */
+.responsive-image {
+  position: relative;
+  overflow: hidden;
+  
+  /* Prevent layout shift */
+  aspect-ratio: var(--aspect-ratio, auto);
+}
+
+.responsive-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+/* Mobile navigation optimizations */
+.mobile-nav {
+  /* Smooth transitions without layout thrashing */
+  transform: translateY(0);
+  transition: transform 0.2s ease-out;
+}
+
+.mobile-nav.scrolled {
+  transform: translateY(0);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Scroll optimization */
+.scroll-optimized {
+  /* Enable hardware acceleration */
+  transform: translate3d(0, 0, 0);
+  
+  /* Optimize scrolling performance */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Touch optimization */
+.touch-optimized {
+  /* Increase touch targets for mobile */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Remove tap highlights */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Improve touch responsiveness */
+  touch-action: manipulation;
+}
+
+/* Font loading optimization */
+.font-loading {
+  font-display: swap;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Critical loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .mobile-text-sm { font-size: 0.875rem; }
+  .mobile-text-base { font-size: 1rem; }
+  .mobile-text-lg { font-size: 1.125rem; }
+  .mobile-text-xl { font-size: 1.25rem; }
+  .mobile-text-2xl { font-size: 1.5rem; }
+  
+  .mobile-p-2 { padding: 0.5rem; }
+  .mobile-p-4 { padding: 1rem; }
+  .mobile-p-6 { padding: 1.5rem; }
+  
+  .mobile-m-2 { margin: 0.5rem; }
+  .mobile-m-4 { margin: 1rem; }
+  .mobile-m-6 { margin: 1.5rem; }
+}
