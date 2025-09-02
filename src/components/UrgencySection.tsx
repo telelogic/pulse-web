@@ -1,6 +1,6 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
-import { useCountdown } from "@/hooks/useCountdown";
+import { useDaysCountdown } from "@/hooks/useCountdown";
 import { Clock, TrendingDown, TrendingUp } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,9 +9,8 @@ const UrgencySection = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Target date: Q3 2025 (assuming July 1, 2025)
-  const targetDate = new Date('2025-07-01T00:00:00Z');
-  const timeLeft = useCountdown(targetDate);
+  // Simple days countdown that updates daily
+  const daysLeft = useDaysCountdown();
 
   const isHomePage = location.pathname === '/';
 
@@ -29,11 +28,11 @@ const UrgencySection = () => {
   };
 
   const CountdownBox = ({ value, label }: { value: number; label: string }) => (
-    <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 min-w-[70px] shadow-lg border border-white/30">
-      <div className="text-2xl md:text-3xl font-bold text-white mb-1">
-        {value.toString().padStart(2, '0')}
+    <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6 min-w-[120px] shadow-lg border border-white/30">
+      <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+        {value}
       </div>
-      <div className="text-xs uppercase text-purple-100 font-medium tracking-wide">
+      <div className="text-sm uppercase text-purple-100 font-medium tracking-wide">
         {label}
       </div>
     </div>
@@ -62,13 +61,17 @@ const UrgencySection = () => {
           {t("urgency.title")}
         </h2>
 
-        {/* Countdown Timer */}
-        <div className="flex justify-center gap-3 mb-6">
-          <CountdownBox value={timeLeft.days} label="DAYS" />
-          <CountdownBox value={timeLeft.hours} label="HRS" />
-          <CountdownBox value={timeLeft.minutes} label="MIN" />
-          <CountdownBox value={timeLeft.seconds} label="SEC" />
+        {/* Countdown Timer - Days Only */}
+        <div className="flex justify-center mb-6">
+          <CountdownBox value={daysLeft} label="DAYS LEFT" />
         </div>
+
+        {/* Debug info - remove in production */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="text-xs text-purple-200 mb-4">
+            Debug: Today = {new Date().toLocaleDateString()}, Target = December 31, 2025, Days = {daysLeft}
+          </div>
+        )}
 
         {/* Subtitle */}
         <p className="text-xl md:text-2xl text-purple-100 font-medium mb-8">

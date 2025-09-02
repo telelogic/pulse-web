@@ -90,7 +90,7 @@ const translations: Translations = {
   
   // Urgency Section
   "urgency.badge": { en: "🚨 Marketing Alert", gr: "🚨 Ειδοποίηση Μάρκετινγκ" },
-  "urgency.title": { en: "Chrome Ends Cookies in", gr: "Το Chrome τελειώνει τα Cookies σε" },
+  "urgency.title": { en: "2025 Cookie Apocalypse Countdown", gr: "Αντίστροφη Μέτρηση Cookie Apocalypse 2025" },
   "urgency.subtitle": { en: "Don't get caught unprepared", gr: "Μην πιαστείτε απροετοίμαστοι" },
   "urgency.waitingRisks": { en: "Waiting = Data Loss + Revenue Drop", gr: "Αναμονή = Απώλεια Δεδομένων + Πτώση Εσόδων" },
   "urgency.pulseAdvantage": { en: "Pulse Users = Ready + Winning", gr: "Χρήστες Pulse = Έτοιμοι + Νικητές" },

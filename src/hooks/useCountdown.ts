@@ -44,3 +44,37 @@ export const useCountdown = (targetDate: Date): TimeLeft => {
 
   return timeLeft;
 };
+
+// Simple days-only countdown hook for better reliability
+export const useDaysCountdown = (): number => {
+  const [daysLeft, setDaysLeft] = useState<number>(0);
+
+  useEffect(() => {
+    const calculateDaysLeft = () => {
+      // Target: A realistic future date for urgency
+      // Using December 31st, 2025 as target date (end of year urgency)
+      const targetDate = new Date('2025-12-31T23:59:59Z');
+      const today = new Date();
+      
+      // Reset time to midnight for accurate day calculation
+      today.setHours(0, 0, 0, 0);
+      const targetMidnight = new Date(targetDate);
+      targetMidnight.setHours(0, 0, 0, 0);
+      
+      const timeDifference = targetMidnight.getTime() - today.getTime();
+      const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+      
+      setDaysLeft(Math.max(0, daysDifference));
+    };
+
+    // Calculate immediately
+    calculateDaysLeft();
+
+    // Update every hour to ensure accuracy
+    const timer = setInterval(calculateDaysLeft, 1000 * 60 * 60);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return daysLeft;
+};
