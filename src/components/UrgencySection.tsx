@@ -1,57 +1,98 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
+import { useCountdown } from "@/hooks/useCountdown";
+import { Clock, TrendingDown, TrendingUp } from "lucide-react";
 
 const UrgencySection = () => {
   const { t } = useLanguage();
   
+  // Target date: Q3 2025 (assuming July 1, 2025)
+  const targetDate = new Date('2025-07-01T00:00:00Z');
+  const timeLeft = useCountdown(targetDate);
+
+  const CountdownBox = ({ value, label }: { value: number; label: string }) => (
+    <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 min-w-[70px] shadow-lg border border-white/30">
+      <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+        {value.toString().padStart(2, '0')}
+      </div>
+      <div className="text-xs uppercase text-purple-100 font-medium tracking-wide">
+        {label}
+      </div>
+    </div>
+  );
+
   return (
-    <section className="py-16 px-4 bg-gradient-to-r from-red-50 to-orange-50 border-t-2 border-destructive/30">
-      <div className="container mx-auto text-center max-w-4xl">
-        <div className="flex items-center justify-center mb-4">
-          <div className="w-3 h-3 bg-destructive rounded-full animate-pulse mr-3"></div>
-          <span className="text-destructive font-semibold text-sm uppercase tracking-wide">
+    <section className="py-12 px-4 bg-gradient-to-br from-primary-purple via-secondary-purple to-primary-blue relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-16 h-16 bg-white rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-12 h-12 bg-white rounded-full animate-pulse delay-500"></div>
+      </div>
+      
+      <div className="container mx-auto text-center max-w-5xl relative z-10">
+        {/* Alert Badge */}
+        <div className="flex items-center justify-center mb-6">
+          <div className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide shadow-lg animate-pulse flex items-center gap-2">
+            <Clock className="w-4 h-4" />
             {t("urgency.badge")}
-          </span>
+          </div>
         </div>
-        <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-foreground">
-          {t("urgency.title")} <span className="text-destructive">{t("urgency.daysLeft")}</span>
+
+        {/* Main Title */}
+        <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 text-white leading-tight">
+          {t("urgency.title")}
         </h2>
-        <p className="text-lg text-muted-foreground mb-8">
-          {t("urgency.description")}
+
+        {/* Countdown Timer */}
+        <div className="flex justify-center gap-3 mb-6">
+          <CountdownBox value={timeLeft.days} label="DAYS" />
+          <CountdownBox value={timeLeft.hours} label="HRS" />
+          <CountdownBox value={timeLeft.minutes} label="MIN" />
+          <CountdownBox value={timeLeft.seconds} label="SEC" />
+        </div>
+
+        {/* Subtitle */}
+        <p className="text-xl md:text-2xl text-purple-100 font-medium mb-8">
+          {t("urgency.subtitle")}
         </p>
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <div className="text-left">
-            <h3 className="font-semibold text-lg mb-3 text-destructive">
-              ❌ {t("urgency.waitingTeams.title")}
-            </h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>• {t("urgency.waitingTeams.point1")}</li>
-              <li>• {t("urgency.waitingTeams.point2")}</li>
-              <li>• {t("urgency.waitingTeams.point3")}</li>
-              <li>• {t("urgency.waitingTeams.point4")}</li>
-            </ul>
+
+        {/* Risk vs Advantage */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8 max-w-4xl mx-auto">
+          {/* Waiting Risks */}
+          <div className="bg-red-500/20 backdrop-blur-sm rounded-xl p-6 border border-red-300/30">
+            <div className="flex items-center justify-center mb-4">
+              <TrendingDown className="w-8 h-8 text-red-300 mr-3" />
+              <h3 className="font-bold text-lg text-red-100">
+                {t("urgency.waitingRisks")}
+              </h3>
+            </div>
           </div>
-          <div className="text-left">
-            <h3 className="font-semibold text-lg mb-3 text-green-700">
-              ✅ {t("urgency.pulseUsers.title")}
-            </h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>• {t("urgency.pulseUsers.point1")}</li>
-              <li>• {t("urgency.pulseUsers.point2")}</li>
-              <li>• {t("urgency.pulseUsers.point3")}</li>
-              <li>• {t("urgency.pulseUsers.point4")}</li>
-            </ul>
+
+          {/* Pulse Advantage */}
+          <div className="bg-green-500/20 backdrop-blur-sm rounded-xl p-6 border border-green-300/30">
+            <div className="flex items-center justify-center mb-4">
+              <TrendingUp className="w-8 h-8 text-green-300 mr-3" />
+              <h3 className="font-bold text-lg text-green-100">
+                {t("urgency.pulseAdvantage")}
+              </h3>
+            </div>
           </div>
         </div>
-        <Button 
-          className="bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold py-4 px-8 text-lg shadow-lg transform hover:scale-105 transition-all"
-          size="lg"
-        >
-          {t("urgency.ctaButton")}
-        </Button>
-        <p className="text-sm text-muted-foreground mt-4">
-          ⚡ {t("urgency.supportNote")}
-        </p>
+
+        {/* CTA Button */}
+        <div className="space-y-4">
+          <Button 
+            className="bg-white text-primary-purple hover:bg-gray-100 font-bold py-4 px-8 text-lg shadow-xl transform hover:scale-105 transition-all duration-200 border-2 border-white/20"
+            size="lg"
+          >
+            {t("urgency.ctaButton")}
+          </Button>
+          
+          <p className="text-purple-200 text-sm font-medium">
+            {t("urgency.supportNote")}
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -89,22 +89,13 @@ const translations: Translations = {
   "footer.tagline": { en: "Designed for the privacy-first world of 2025", gr: "Σχεδιασμένο για τον κόσμο που δίνει προτεραιότητα στην ιδιωτικότητα του 2025" },
   
   // Urgency Section
-  "urgency.badge": { en: "Marketing Emergency", gr: "Επείγον Μάρκετινγκ" },
-  "urgency.title": { en: "Chrome Kills Third-Party Cookies in", gr: "Το Chrome σκοτώνει τα Third-Party Cookies σε" },
-  "urgency.daysLeft": { en: "148 Days", gr: "148 Μέρες" },
-  "urgency.description": { en: "Marketing teams that wait until Q3 2025 will lose months of data and attribution. The time to prepare is now - while your competitors are still in denial.", gr: "Οι ομάδες μάρκετινγκ που θα περιμένουν έως το Q3 2025 θα χάσουν μήνες δεδομένων και απόδοσης. Η ώρα να προετοιμαστείτε είναι τώρα - ενώ οι ανταγωνιστές σας αρνούνται ακόμα." },
-  "urgency.waitingTeams.title": { en: "Teams That Wait Will Face:", gr: "Οι Ομάδες που Περιμένουν θα Αντιμετωπίσουν:" },
-  "urgency.waitingTeams.point1": { en: "Complete attribution blackouts", gr: "Πλήρη διακοπή απόδοσης" },
-  "urgency.waitingTeams.point2": { en: "Broken retargeting campaigns", gr: "Σπασμένες καμπάνιες retargeting" },
-  "urgency.waitingTeams.point3": { en: "Scrambling for expensive alternatives", gr: "Αναζήτηση ακριβών εναλλακτικών" },
-  "urgency.waitingTeams.point4": { en: "Months of lost optimization data", gr: "Μήνες χαμένων δεδομένων βελτιστοποίησης" },
-  "urgency.pulseUsers.title": { en: "Pulse Users Are Already:", gr: "Οι Χρήστες του Pulse Έχουν Ήδη:" },
-  "urgency.pulseUsers.point1": { en: "Tracking 100% of conversions cookieless", gr: "Παρακολούθηση 100% των μετατροπών χωρίς cookies" },
-  "urgency.pulseUsers.point2": { en: "Building competitive advantages", gr: "Δημιουργία ανταγωνιστικών πλεονεκτημάτων" },
-  "urgency.pulseUsers.point3": { en: "Exceeding previous performance", gr: "Υπέρβαση προηγούμενης απόδοσης" },
-  "urgency.pulseUsers.point4": { en: "Future-proofed for any privacy change", gr: "Προστασία για οποιαδήποτε αλλαγή απορρήτου" },
-  "urgency.ctaButton": { en: "Secure Your Marketing Future - Start Free Trial", gr: "Ασφαλίστε το Μέλλον του Μάρκετινγκ σας - Ξεκινήστε Δωρεάν Δοκιμή" },
-  "urgency.supportNote": { en: "Emergency migration support included", gr: "Υποστήριξη επείγουσας μετανάστευσης περιλαμβάνεται" }
+  "urgency.badge": { en: "🚨 Marketing Alert", gr: "🚨 Ειδοποίηση Μάρκετινγκ" },
+  "urgency.title": { en: "Chrome Ends Cookies in", gr: "Το Chrome τελειώνει τα Cookies σε" },
+  "urgency.subtitle": { en: "Don't get caught unprepared", gr: "Μην πιαστείτε απροετοίμαστοι" },
+  "urgency.waitingRisks": { en: "Waiting = Data Loss + Revenue Drop", gr: "Αναμονή = Απώλεια Δεδομένων + Πτώση Εσόδων" },
+  "urgency.pulseAdvantage": { en: "Pulse Users = Ready + Winning", gr: "Χρήστες Pulse = Έτοιμοι + Νικητές" },
+  "urgency.ctaButton": { en: "Start Free Trial Now", gr: "Ξεκινήστε Δωρεάν Δοκιμή Τώρα" },
+  "urgency.supportNote": { en: "⚡ Priority migration support", gr: "⚡ Υποστήριξη προτεραιότητας μετανάστευσης" }
 };
 
 interface LanguageContextType {
