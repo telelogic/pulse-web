@@ -40,7 +40,7 @@ const Pricing = () => {
           "price": "149",
           "priceSpecification": {
             "@type": "PriceSpecification",
-            "price": "149",
+            "price": "299",
             "priceCurrency": "USD",
             "billingDuration": "P1M"
           },
@@ -252,8 +252,8 @@ const Pricing = () => {
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold mb-2">Starter</h3>
                   <p className="text-gray-600 mb-4">Perfect for growing businesses</p>
-                  <div className="text-4xl font-bold mb-2">$497<span className="text-lg text-gray-600">/month</span></div>
-                  <p className="text-sm text-gray-600">Billed annually • $597/month monthly</p>
+                  <div className="text-4xl font-bold mb-2">$49<span className="text-lg text-gray-600">/month</span></div>
+                  <p className="text-sm text-gray-600">Billed annually • $29/month monthly</p>
                 </div>
                 
                 <div className="space-y-4 mb-8">
@@ -306,8 +306,8 @@ const Pricing = () => {
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold mb-2">Professional</h3>
                   <p className="text-gray-600 mb-4">For serious marketing teams</p>
-                  <div className="text-4xl font-bold mb-2">$1,497<span className="text-lg text-gray-600">/month</span></div>
-                  <p className="text-sm text-gray-600">Billed annually • $1,797/month monthly</p>
+                  <div className="text-4xl font-bold mb-2">$299<span className="text-lg text-gray-600">/month</span></div>
+                  <p className="text-sm text-gray-600">Billed annually • $249/month monthly</p>
                 </div>
                 
                 <div className="space-y-4 mb-8">
@@ -550,10 +550,10 @@ const Pricing = () => {
               <div className="mt-12 text-center">
                 <p className="text-white/80 text-sm mb-4">Trusted by leading brands:</p>
                 <div className="flex flex-wrap justify-center gap-4 sm:gap-8 opacity-60">
-                  <span className="text-lg font-bold">TechCorp</span>
-                  <span className="text-lg font-bold">GrowthCo</span>
-                  <span className="text-lg font-bold">ScaleUp</span>
-                  <span className="text-lg font-bold">InnovateLtd</span>
+                  <span className="text-lg font-bold">Nefos AI</span>
+                  <span className="text-lg font-bold">AlkoCert</span>
+                  <span className="text-lg font-bold">Telelogic</span>
+                  <span className="text-lg font-bold">AISynergy</span>
                 </div>
               </div>
             </div>
