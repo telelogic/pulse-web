@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, Send } from "lucide-react";
+import { CheckCircle, Send, Shield } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Link, useSearchParams } from "react-router-dom";
 import { useForm, ValidationError } from '@formspree/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 declare global {
   interface Window {
@@ -19,6 +20,11 @@ const Contact = () => {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const [actionType, setActionType] = useState('');
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  
+  // reCAPTCHA site key from environment variables
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Test key for development
   
   // Replace 'your-form-id' with your actual Formspree form ID
   // You'll get this after creating a form at https://formspree.io
@@ -35,6 +41,35 @@ const Contact = () => {
       setActionType('General Inquiry');
     }
   }, [searchParams]);
+
+  // Handle reCAPTCHA change
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
+
+  // Handle form submission with reCAPTCHA validation
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    // Check if reCAPTCHA is completed
+    if (!recaptchaToken) {
+      alert('Please complete the reCAPTCHA verification.');
+      return;
+    }
+
+    // Add reCAPTCHA token to form data
+    const formData = new FormData(event.currentTarget);
+    formData.append('g-recaptcha-response', recaptchaToken);
+    
+    // Submit the form
+    await handleSubmit(event);
+    
+    // Reset reCAPTCHA after submission
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
+    setRecaptchaToken(null);
+  };
 
   // Show success message when form is submitted successfully
   if (state.succeeded) {
@@ -165,7 +200,7 @@ const Contact = () => {
                 </div>
               )}
               <form 
-                onSubmit={handleSubmit} 
+                onSubmit={handleFormSubmit} 
                 method="POST"
                 action="https://formspree.io/f/mgvlonvn"
                 className="space-y-5"
@@ -240,10 +275,32 @@ const Contact = () => {
                   />
                 </div>
                 
+                {/* reCAPTCHA v2 Protection */}
+                <div className="pt-2">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Shield className="w-4 h-4 text-gray-600" />
+                    <span className="text-sm text-gray-600">Spam Protection</span>
+                  </div>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={handleRecaptchaChange}
+                    onExpired={() => setRecaptchaToken(null)}
+                    onErrored={() => setRecaptchaToken(null)}
+                    theme="light"
+                    size="normal"
+                  />
+                  {!recaptchaToken && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Please complete the reCAPTCHA verification above to submit the form.
+                    </p>
+                  )}
+                </div>
+                
                 <div className="pt-2">
                   <Button 
                     type="submit" 
-                    disabled={state.submitting}
+                    disabled={state.submitting || !recaptchaToken}
                     className="w-full bg-primary-purple hover:bg-secondary-purple text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {state.submitting ? (
