@@ -156,7 +156,7 @@
       // Environment-aware configuration
       const isProduction = location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
       const apiEndpoint = isProduction 
-        ? 'https://licserver.internal.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io'
+        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io'
         : 'http://localhost:3001';
 
       // Initialize Pulse Analytics
@@ -171,7 +171,7 @@
 
       // Dynamic script loading based on environment
       const scriptSrc = isProduction 
-        ? 'https://licserver.internal.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io/pulse.min.js'
+        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io/pulse.min.js'
         : 'http://localhost:3001/pulse.min.js';
       
       const pulseScript = document.createElement('script');
