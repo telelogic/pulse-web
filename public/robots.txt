@@ -10,13 +10,41 @@ Allow: /pricing
 Allow: /features
 Allow: /blog
 
-# Block admin and sensitive areas (when we add them)
+# Block admin and sensitive areas
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 Disallow: /_internal/
+Disallow: /test/
+Disallow: /debug/
 
-# Specific search engine bots
+# Block aggressive crawlers and scrapers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot  
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# Block social media crawlers from analytics endpoints
+User-agent: facebookexternalhit
+Disallow: /api/
+
+User-agent: Twitterbot
+Disallow: /api/
+
+# Allow legitimate search engines
 User-agent: Googlebot
 Allow: /
 

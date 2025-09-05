@@ -61,6 +61,17 @@ interface PrivacySafeFingerprint {
   webgl_vendor: string;
 }
 
+interface BotDetectionResult {
+  isBot: boolean;
+  botType: string | null;
+  confidence: number;
+  reasons: string[];
+}
+
+interface PrivacyComplianceData {
+  webgl_vendor: string;
+}
+
 export class PulseTracker {
   private config: PulseConfig;
   private licenseManager: PulseLicenseManager;
@@ -116,6 +127,14 @@ export class PulseTracker {
         return;
       }
 
+      // Bot detection - block bot traffic early
+      const botDetection = this.detectBot();
+      if (botDetection.isBot && botDetection.confidence > 0.7) {
+        this.log(`Bot detected: ${botDetection.botType} (confidence: ${botDetection.confidence})`);
+        this.log('Reasons:', botDetection.reasons.join(', '));
+        return; // Don't track bot traffic
+      }
+
       this.log('Pulse.js initialized with valid license');
 
       // Generate session and visitor IDs
@@ -168,6 +187,9 @@ export class PulseTracker {
     // Record usage for quota tracking
     this.licenseManager.recordEvent();
 
+    // Get bot detection data
+    const botDetection = this.detectBot();
+    
     const event: TrackingEvent = {
       event_id: this.generateEventId(),
       site_id: this.config.siteId,
@@ -181,7 +203,12 @@ export class PulseTracker {
         referrer: this.referrer,
         user_agent: navigator.userAgent,
         viewport: `${window.innerWidth}x${window.innerHeight}`,
-        _pulse_plan: this.licenseManager.getPlanName()
+        _pulse_plan: this.licenseManager.getPlanName(),
+        // Bot detection data
+        bot_detected: botDetection.isBot,
+        bot_type: botDetection.botType,
+        bot_confidence: Math.round(botDetection.confidence * 100) / 100,
+        bot_reasons: botDetection.reasons.join('; ')
       },
       attribution: {
         source: this.utmParams.utm_source,
@@ -580,6 +607,159 @@ export class PulseTracker {
     if (online && this.eventQueue.length > 0) {
       this.flushEventQueue();
     }
+  }
+
+  /**
+   * Comprehensive bot detection system
+   */
+  private detectBot(): BotDetectionResult {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const reasons: string[] = [];
+    let confidence = 0;
+    let botType: string | null = null;
+
+    // Known bot patterns in user agent
+    const botPatterns = [
+      // Search engines
+      { pattern: /googlebot/i, type: 'Google Bot', weight: 0.9 },
+      { pattern: /bingbot/i, type: 'Bing Bot', weight: 0.9 },
+      { pattern: /slurp/i, type: 'Yahoo Bot', weight: 0.9 },
+      { pattern: /duckduckbot/i, type: 'DuckDuckGo Bot', weight: 0.9 },
+      { pattern: /baiduspider/i, type: 'Baidu Bot', weight: 0.9 },
+      { pattern: /yandexbot/i, type: 'Yandex Bot', weight: 0.9 },
+      
+      // SEO tools
+      { pattern: /ahrefsbot/i, type: 'AhrefsBot', weight: 1.0 },
+      { pattern: /semrushbot/i, type: 'SemrushBot', weight: 1.0 },
+      { pattern: /mj12bot/i, type: 'MJ12Bot', weight: 1.0 },
+      { pattern: /dotbot/i, type: 'DotBot', weight: 1.0 },
+      { pattern: /blexbot/i, type: 'BLEXBot', weight: 1.0 },
+      { pattern: /dataforseobot/i, type: 'DataForSeoBot', weight: 1.0 },
+      
+      // Social media
+      { pattern: /facebookexternalhit/i, type: 'Facebook Bot', weight: 0.8 },
+      { pattern: /twitterbot/i, type: 'Twitter Bot', weight: 0.8 },
+      { pattern: /linkedinbot/i, type: 'LinkedIn Bot', weight: 0.8 },
+      
+      // Generic bot indicators
+      { pattern: /bot|crawler|spider|scraper/i, type: 'Generic Bot', weight: 0.7 },
+      { pattern: /headless/i, type: 'Headless Browser', weight: 0.8 },
+      { pattern: /phantom|selenium|webdriver/i, type: 'Automation Tool', weight: 0.9 },
+    ];
+
+    // Check user agent patterns
+    for (const { pattern, type, weight } of botPatterns) {
+      if (pattern.test(userAgent)) {
+        reasons.push(`User agent matches ${type} pattern`);
+        confidence = Math.max(confidence, weight);
+        botType = type;
+      }
+    }
+
+    // Browser behavior checks
+    try {
+      // Missing standard browser features
+      if (typeof (window as any).webkitRequestAnimationFrame === 'undefined' && 
+          typeof window.requestAnimationFrame === 'undefined') {
+        reasons.push('Missing animation frame support');
+        confidence += 0.3;
+      }
+
+      // Suspicious navigator properties
+      if (!navigator.language || navigator.language === 'en-US') {
+        // Many bots default to en-US
+        confidence += 0.1;
+      }
+
+      // Check for headless indicators
+      if ((navigator as any).webdriver === true) {
+        reasons.push('WebDriver detected');
+        confidence += 0.8;
+        botType = botType || 'Automation Tool';
+      }
+
+      // Screen resolution checks (common bot indicators)
+      if (screen.width === 0 || screen.height === 0) {
+        reasons.push('Invalid screen dimensions');
+        confidence += 0.6;
+      }
+
+      if (screen.width === 1024 && screen.height === 768) {
+        // Very common default for headless browsers
+        reasons.push('Suspicious default screen resolution');
+        confidence += 0.2;
+      }
+
+      // Timezone checks
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (!timezone || timezone === 'UTC') {
+        reasons.push('Missing or suspicious timezone');
+        confidence += 0.2;
+      }
+
+      // Plugin checks
+      if (navigator.plugins.length === 0) {
+        reasons.push('No browser plugins detected');
+        confidence += 0.3;
+      }
+
+      // Hardware concurrency (many bots report unusual values)
+      if (navigator.hardwareConcurrency && navigator.hardwareConcurrency > 16) {
+        reasons.push('Unusual hardware concurrency value');
+        confidence += 0.2;
+      }
+
+      // Canvas fingerprint check
+      try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reasons.push('Canvas context not available');
+          confidence += 0.4;
+        } else {
+          ctx.textBaseline = 'top';
+          ctx.font = '14px Arial';
+          ctx.fillText('Bot detection test', 2, 2);
+          const canvasData = canvas.toDataURL();
+          
+          // Check for blank canvas (common in headless browsers)
+          if (canvasData === 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==') {
+            reasons.push('Blank canvas fingerprint');
+            confidence += 0.5;
+          }
+        }
+      } catch (e) {
+        reasons.push('Canvas fingerprinting failed');
+        confidence += 0.3;
+      }
+
+      // Check for automation frameworks
+      if ((window as any).phantom || (window as any)._phantom || (window as any).callPhantom) {
+        reasons.push('PhantomJS detected');
+        confidence += 0.9;
+        botType = 'PhantomJS';
+      }
+
+      if ((window as any).selenium || (document as any).selenium || (window as any).webdriver) {
+        reasons.push('Selenium detected');
+        confidence += 0.9;
+        botType = 'Selenium';
+      }
+
+    } catch (error) {
+      reasons.push('Error during bot detection checks');
+      confidence += 0.2;
+    }
+
+    // Ensure confidence doesn't exceed 1.0
+    confidence = Math.min(confidence, 1.0);
+
+    return {
+      isBot: confidence > 0.5,
+      botType: botType || (confidence > 0.7 ? 'Unknown Bot' : null),
+      confidence,
+      reasons
+    };
   }
 
   private log(...args: any[]): void {
