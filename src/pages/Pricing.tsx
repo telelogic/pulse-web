@@ -475,10 +475,10 @@ const Pricing = () => {
                 </div>
                 
                 <div className="bg-gray-50 p-6 rounded-xl">
-                  <h3 className="font-bold text-lg mb-3">What happens when Chrome removes third-party cookies?</h3>
+                  <h3 className="font-bold text-lg mb-3">Why choose cookieless analytics over cookie-based tracking?</h3>
                   <p className="text-gray-600">
-                    Nothing changes for Pulse users. We're already 100% cookieless, so you'll continue getting complete 
-                    attribution and insights while competitors lose 40-60% of their tracking accuracy.
+                    Cookie-based analytics are becoming less accurate as browsers increase privacy protections. Pulse delivers 
+                    superior attribution accuracy while respecting user privacy and building customer trust.
                   </p>
                 </div>
                 

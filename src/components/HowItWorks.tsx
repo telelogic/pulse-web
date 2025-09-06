@@ -37,8 +37,8 @@ const HowItWorks = () => {
             Ready in 15 Minutes, <span className="text-primary-purple">Future-Proof Forever</span>
           </h2>
           <p className="text-gray-600 text-lg">
-            Our four-step process gets you cookieless-ready before Chrome's Q3 2025 deadline,
-            with complete marketing attribution and zero compliance risk.
+            Our four-step process gets you privacy-first analytics with superior attribution,
+            complete marketing insights and zero compliance risk.
           </p>
         </div>
 

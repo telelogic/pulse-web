@@ -73,4 +73,4 @@ Sitemap: https://privapulse.com/sitemap.xml
 # Additional resources
 # Website: https://privapulse.com
 # Contact: contact@privapulse.com
-# Focus: Cookieless analytics for Chrome 2025 cookie deprecation
+# Focus: Privacy-first cookieless analytics for superior attribution
