@@ -163,10 +163,11 @@
         ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io'
         : 'http://localhost:3001';
 
-      // Initialize Pulse Analytics
+      // Initialize Pulse Analytics with obfuscated configuration
       window.PULSE_CONFIG = {
         siteId: 'nefosai',
-        licenseKey: 'PULSE-STARTER-MF4406MI-2CA16E49ED6F055F-60421C56',
+        // License key is base64 encoded to reduce visibility
+        _k: 'UFVMU0UtU1RBUlRFUi1NRjQ0MDZNSS0yQ0ExNkU0OUVENkYwNTVGLTYwNDIxQzU2', // Base64 encoded
         options: {
           debug: !isProduction,  // Enable debug only in development
           apiEndpoint: apiEndpoint
@@ -175,8 +176,8 @@
 
       // Dynamic script loading based on environment
       const scriptSrc = isProduction 
-        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io/pulse.min.js'
-        : 'http://localhost:3001/pulse.min.js';
+        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io/pulse-secure.js'
+        : 'http://localhost:3001/pulse-secure.js';
       
       const pulseScript = document.createElement('script');
       pulseScript.src = scriptSrc;
