@@ -160,7 +160,7 @@
       // Environment-aware configuration
       const isProduction = location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
       const apiEndpoint = isProduction 
-        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io'
+        ? 'https://license-api.privapulse.com'
         : 'http://localhost:3001';
 
       // Initialize Pulse Analytics with obfuscated configuration
@@ -176,7 +176,7 @@
 
       // Dynamic script loading based on environment
       const scriptSrc = isProduction 
-        ? 'https://licserver.yellowmushroom-5eb04332.swedencentral.azurecontainerapps.io/pulse-secure.js'
+        ? 'https://license-api.privapulse.com/pulse-secure.js'
         : 'http://localhost:3001/pulse-secure.js';
       
       const pulseScript = document.createElement('script');
